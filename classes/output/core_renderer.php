@@ -109,7 +109,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      */
     public function mydashboard_admin_header() {
         $html = html_writer::start_div('row');
-        $html .= html_writer::start_div('col-xs-12 p-a-1');
+        $html .= html_writer::start_div('col-md-12 py-2');
 
         $pageheadingbutton = $this->page_heading_button();
         if (empty($this->page->layout_options['nonavbar'])) {

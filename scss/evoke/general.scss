@@ -1,0 +1,121 @@
+$mellowyellow: #edd661 !default;
+$urgentblue: #27c0e3 !default;
+$whale: #498eb3 !default;
+$night: #27c0e3 !default;
+$rhubarb: #ff6666 !default;
+$evoke: #ff0540 !default;
+$brightmint: #00f0a6 !default;
+$forestgreen: #153213 !default;
+$poisonousgreen: #b8f907 !default;
+$brightblue: #3329ff !default;
+$livingblack: #140f3f !default;
+$purple: #9933ff !default;
+$cyclamen: #ff66ff !default;
+
+.btn-secondary {
+  background-color: $brightmint;
+  border-color: $brightmint;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($brightmint, 10);
+    border-color: darken($brightmint, 10);
+  }
+}
+
+nav.navbar .navbar-brand .logo img {
+  padding: 10px 0;
+}
+#page-my-index,
+[data-region="blocks-column"] {
+  background-color: #000;
+}
+
+#page-my-index {
+  .singlebutton {
+    margin-left: 0;
+
+    .btn {
+      background-color: $evoke;
+      border-color: $evoke;
+
+      &:hover,
+      &:active {
+        background-color: darken($evoke, 10);
+        border-color: darken($evoke, 10);
+      }
+    }
+  }
+
+  #region-main-box #region-main .card:not([class*="dashboard-card"]):not([class*="mymaincontent"]) {
+    border-top: solid 2px $brightmint;
+  }
+}
+
+#sidepreopen-control {
+  background-color: $brightmint;
+}
+
+nav.navbar {
+  background-color: $livingblack;
+
+  .popover-region-toggle {
+    color: $brightmint;
+  }
+
+  .nav-link {
+    color: $brightmint !important;
+  }
+
+  .drawer-toggle .nav-link {
+    color: $brightmint !important;
+  }
+
+  .dropdown-item:active,
+  .dropdown-item:hover,
+  .dropdown-item:focus,
+  .dropdown-item:focus-within {
+    background-color: $livingblack;
+  }
+
+  .usermenu {
+    .dropdown-toggle {
+      color: $brightmint !important;
+    }
+  }
+}
+
+.aabtn.focus,
+.aabtn:focus,
+.btn-link.focus,
+.btn-link:focus,
+.nav-link.focus,
+.nav-link:focus,
+.editor_atto_toolbar button.focus,
+.editor_atto_toolbar button:focus, [role="button"].focus, [role="button"]:focus,
+.list-group-item-action.focus,
+.list-group-item-action:focus, input[type="checkbox"].focus, input[type="checkbox"]:focus, input[type="radio"].focus, input[type="radio"]:focus, input[type="file"].focus, input[type="file"]:focus, input[type="image"].focus, input[type="image"]:focus,
+.sr-only-focusable.focus,
+.sr-only-focusable:focus, a.dropdown-toggle.focus, a.dropdown-toggle:focus,
+.modal-dialog[tabindex="0"].focus,
+.modal-dialog[tabindex="0"]:focus,
+.moodle-dialogue-base .closebutton.focus,
+.moodle-dialogue-base .closebutton:focus, button.close.focus, button.close:focus,
+.form-autocomplete-selection.focus,
+.form-autocomplete-selection:focus {
+  box-shadow: 0 0 0 0.2rem rgb(0 240 166 / 75%);
+}
+
+#nav-drawer-footer {
+  background-color: $brightmint;
+}
+
+#top-footer {
+  h4 {
+    color: $brightmint;
+  }
+
+  .btn-default {
+    color: $brightmint;
+  }
+}
