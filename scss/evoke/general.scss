@@ -12,23 +12,13 @@ $livingblack: #140f3f !default;
 $purple: #9933ff !default;
 $cyclamen: #ff66ff !default;
 
-.btn-secondary {
-  background-color: $brightmint;
-  border-color: $brightmint;
-  color: #fff;
-
-  &:hover {
-    background-color: darken($brightmint, 10);
-    border-color: darken($brightmint, 10);
-  }
-}
-
 nav.navbar .navbar-brand .logo img {
-  padding: 10px 0;
+  max-height: 50px;
 }
-#page-my-index,
+
+body,
 [data-region="blocks-column"] {
-  background-color: #000;
+  background-color: $purple !important;
 }
 
 #page-my-index {
@@ -53,7 +43,7 @@ nav.navbar .navbar-brand .logo img {
 }
 
 #sidepreopen-control {
-  background-color: $brightmint;
+  background-color: $livingblack;
 }
 
 nav.navbar {
@@ -107,7 +97,7 @@ nav.navbar {
 }
 
 #nav-drawer-footer {
-  background-color: $brightmint;
+  background-color: $purple;
 }
 
 #top-footer {
@@ -117,5 +107,53 @@ nav.navbar {
 
   .btn-default {
     color: $brightmint;
+  }
+}
+
+#page-footer {
+  display: none;
+}
+
+.btn-primary {
+  background-color: $evoke;
+  border-color: $evoke;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($evoke, 10);
+    border-color: darken($evoke, 10);
+  }
+}
+
+.btn-secondary {
+  background-color: $whale;
+  border-color: $whale;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($whale, 10);
+    border-color: darken($whale, 10);
+  }
+}
+
+.btn-light {
+  background-color: $brightmint;
+  border-color: $brightmint;
+  color: $livingblack;
+
+  &:hover {
+    background-color: darken($brightmint, 10);
+    border-color: darken($brightmint, 10);
+  }
+}
+
+.btn-dark {
+  background-color: $livingblack;
+  border-color: $livingblack;
+  color: $brightmint;
+
+  &:hover {
+    background-color: darken($livingblack, 10);
+    border-color: darken($livingblack, 10);
   }
 }
