@@ -13,12 +13,30 @@ $purple: #9933ff !default;
 $cyclamen: #ff66ff !default;
 
 nav.navbar .navbar-brand .logo img {
-  max-height: 50px;
+  max-height: 30px;
 }
 
 body,
 [data-region="blocks-column"] {
-  background-color: $purple !important;
+  background-color: #ffffff !important;
+}
+
+.card {
+  border: none;
+
+  .card-footer {
+    border-top: none;
+  }
+}
+
+.card-deck {
+  .card {
+    border: 1px solid #d7dfe3;
+
+    .card-footer {
+      border-top: 1px solid #d7dfe3;
+    }
+  }
 }
 
 #page-my-index {
@@ -39,6 +57,22 @@ body,
 
   #region-main-box #region-main .card:not([class*="dashboard-card"]):not([class*="mymaincontent"]) {
     border-top: solid 2px $brightmint;
+  }
+}
+
+#page-site-index {
+  #frontpage-available-course-list h2 {
+    color: $brightmint;
+    text-align: left;
+
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  .card-title a {
+    color: $livingblack;
   }
 }
 
