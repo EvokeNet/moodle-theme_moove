@@ -1,0 +1,41 @@
+#page-login-index.moove-login {
+  .logo img {
+    max-width: 80%;
+  }
+
+  #page-wrapper #page {
+    background: #000000;
+    background-image: linear-gradient(
+                    to right,
+                    #000000, $livingblack
+    ) !important;
+  }
+
+  .loginpanel {
+    border-radius: initial;
+
+    .card-block {
+      .instructions,
+      .form {
+        height: initial;
+        min-height: initial;
+        max-height: initial;
+      }
+
+      .instructions {
+        padding: 40px 20px;
+        border-radius: 0 !important;
+        background-color: #000000;
+        background-image: url([[pix:theme|login_side_bg]]);
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #page-login-index.moove-login .loginpanel .card-block .instructions {
+    min-height: 124px !important;
+  }
+}
