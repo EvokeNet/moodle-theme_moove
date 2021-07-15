@@ -99,6 +99,10 @@ body,
     font-size: 1.25rem;
     line-height: 1.25rem;
   }
+
+  .coursecat.badge-info {
+    background-color: $night;
+  }
 }
 
 #sidepreopen-control {
@@ -246,6 +250,10 @@ nav.navbar {
         padding-left: 0;
       }
 
+      &:last-of-type > * {
+        font-weight: 700;
+      }
+
       > * {
         background-color: initial;
         border-color: initial;
@@ -267,6 +275,10 @@ nav.navbar {
 }
 
 .pagelayout-incourse {
+  #page {
+    padding: 2rem 12rem;
+  }
+
   .generalbox {
     p {
       font-size: 1.5rem;
