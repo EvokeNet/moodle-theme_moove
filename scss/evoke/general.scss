@@ -275,10 +275,6 @@ nav.navbar {
 }
 
 .pagelayout-incourse {
-  #page {
-    padding: 2rem 12rem;
-  }
-
   .generalbox {
     p {
       font-size: 1.5rem;
@@ -288,5 +284,13 @@ nav.navbar {
 
   .activity-navigation {
     background-color: $backgroundgray;
+  }
+}
+
+@media (min-width: 1200px) {
+  .pagelayout-incourse {
+    #page {
+      padding: 2rem 12rem;
+    }
   }
 }
