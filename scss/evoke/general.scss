@@ -4,16 +4,34 @@ $whale: #498eb3 !default;
 $night: #27c0e3 !default;
 $rhubarb: #ff6666 !default;
 $evoke: #ff0540 !default;
-$brightmint: #00e6a6 !default;
+$brightmint: #00f0a6 !default;
 $forestgreen: #153213 !default;
 $poisonousgreen: #b8f907 !default;
 $brightblue: #3329ff !default;
 $livingblack: #140f3f !default;
 $purple: #9933ff !default;
 $cyclamen: #ff66ff !default;
+$backgroundgray: #f7f7f7 !default;
 
-nav.navbar .navbar-brand .logo img {
-  max-height: 30px;
+nav.navbar {
+  background: #000000;
+  background-image: linear-gradient(
+                  to right,
+                  #000000 40%, $livingblack 60%
+  ) !important;
+
+  .drawer-toggle {
+    background-color: #000000;
+  }
+
+  .navbar-brand .svg_logo_white {
+    max-height: 30px;
+    width: inherit;
+
+    &:hover .letter {
+      filter: drop-shadow(0px 0px 12px rgb(39 192 227))
+    }
+  }
 }
 
 body,
@@ -61,6 +79,11 @@ body,
 }
 
 #page-site-index {
+  h1,
+  .h1 {
+    font-size: 3.25rem;
+  }
+
   #frontpage-available-course-list h2 {
     color: $brightmint;
     text-align: left;
@@ -73,6 +96,8 @@ body,
 
   .card-title a {
     color: $livingblack;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
   }
 }
 
@@ -109,6 +134,26 @@ nav.navbar {
   }
 }
 
+#nav-drawer {
+  .list-group .list-group-item a:hover {
+    color: $livingblack;
+  }
+
+  .list-group-item-action.active,
+  .list-group-item.active {
+    background-color: $brightmint;
+    color: $livingblack;
+
+    a {
+      color: $livingblack;
+    }
+  }
+}
+
+#nav-drawer-footer {
+  background-color: $evoke;
+}
+
 .aabtn.focus,
 .aabtn:focus,
 .btn-link.focus,
@@ -128,10 +173,6 @@ nav.navbar {
 .form-autocomplete-selection.focus,
 .form-autocomplete-selection:focus {
   box-shadow: 0 0 0 0.2rem rgb(0 240 166 / 75%);
-}
-
-#nav-drawer-footer {
-  background-color: $purple;
 }
 
 #top-footer {
@@ -189,5 +230,51 @@ nav.navbar {
   &:hover {
     background-color: darken($livingblack, 10);
     border-color: darken($livingblack, 10);
+  }
+}
+
+#page-navbar {
+  .page-header-headings h1 {
+    font-size: 1.34375rem;
+  }
+
+  .breadcrumb {
+    background-color: initial;
+
+    li {
+      &:first-of-type > * {
+        padding-left: 0;
+      }
+
+      > * {
+        background-color: initial;
+        border-color: initial;
+        padding: .4em .6em;
+
+        &:after {
+          border: 5px solid transparent;
+          border-left-color: inherit;
+          border-left-width: 5px;
+          top: 12px;
+        }
+      }
+
+      a {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.pagelayout-incourse {
+  .generalbox {
+    p {
+      font-size: 1.5rem;
+      color: $livingblack;
+    }
+  }
+
+  .activity-navigation {
+    background-color: $backgroundgray;
   }
 }
