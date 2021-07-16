@@ -179,18 +179,16 @@ nav.navbar {
   box-shadow: 0 0 0 0.2rem rgb(0 240 166 / 75%);
 }
 
-#top-footer {
-  h4 {
-    color: $brightmint;
-  }
-
-  .btn-default {
-    color: $brightmint;
-  }
-}
-
 #page-footer {
-  display: none;
+  height: 50px;
+  background-color: $livingblack;
+  .madeby {
+    padding-bottom: 0;
+
+    p {
+      padding: .75rem 0;
+    }
+  }
 }
 
 .btn-primary {
