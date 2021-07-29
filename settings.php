@@ -757,4 +757,14 @@ if ($ADMIN->fulltree) {
     $settingpage->add($setting);
 
     $settings->add($settingpage);
+
+    // Evoke page.
+    $settingpage = new admin_settingpage('theme_moove_evoke', get_string('evokesettings', 'theme_moove'));
+
+    // H5P custom CSS.
+    $setting = new admin_setting_configtextarea('theme_moove/hvpcss', get_string('hvpcss', 'theme_moove'), get_string('hvpcss_desc', 'theme_moove'), '');
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settingpage->add($setting);
+
+    $settings->add($settingpage);
 }
