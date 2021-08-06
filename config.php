@@ -46,7 +46,7 @@ $THEME->layouts = [
     // Main course page.
     'course' => array(
         'file' => 'course.php',
-        'regions' => array('side-pre'),
+        'regions' => array('side-pre', 'side-post'),
         'defaultregion' => 'side-pre',
         'options' => array('nonavbar' => false, 'langmenu' => true),
     ),

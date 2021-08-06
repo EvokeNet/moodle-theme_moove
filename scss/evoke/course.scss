@@ -1,0 +1,24 @@
+body.pagelayout-course {
+  #sidepost-blocks {
+    .no-blocks {
+      display: none;
+    }
+  }
+
+  &.editing {
+    #sidepost-blocks.no-blocks {
+      min-height: 140px;
+      border: 1px solid #929292;
+      background-color: #c3c3c3 !important;
+
+      &:after {
+        content: "Drop blocks here!";
+        position: absolute;
+        width: 300px;
+        top: 60px;
+        left: 50%;
+        margin-left: -5px;
+      }
+    }
+  }
+}
