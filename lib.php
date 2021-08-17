@@ -285,8 +285,6 @@ function theme_moove_extend_flat_navigation(\flat_navigation $flatnav) {
 
     theme_moove_delete_menuitems($flatnav);
 
-    theme_moove_add_coursesections_to_navigation($flatnav);
-
     theme_moove_rename_menuitems($flatnav);
 }
 
@@ -431,50 +429,6 @@ function theme_moove_rename_menuitems(\flat_navigation $flatnav) {
 
     if ($item) {
         $item->text = get_string('myactivecourses', 'theme_moove');
-    }
-}
-
-/**
- * Improve flat navigation menu
- *
- * @param flat_navigation $flatnav
- */
-function theme_moove_add_coursesections_to_navigation(\flat_navigation $flatnav) {
-    global $PAGE;
-
-    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
-
-    if (!$participantsitem) {
-        return;
-    }
-
-    if ($PAGE->course->format != 'singleactivity') {
-        $coursesectionsoptions = [
-            'text' => get_string('coursesections', 'theme_moove'),
-            'shorttext' => get_string('coursesections', 'theme_moove'),
-            'icon' => new pix_icon('t/viewdetails', ''),
-            'type' => \navigation_node::COURSE_CURRENT,
-            'key' => 'course-sections',
-            'parent' => $participantsitem->parent
-        ];
-
-        $coursesections = new \flat_navigation_node($coursesectionsoptions, 0);
-
-        foreach ($flatnav as $item) {
-            if ($item->type == \navigation_node::TYPE_SECTION) {
-                $coursesections->add_node(new \navigation_node([
-                    'text' => $item->text,
-                    'shorttext' => $item->shorttext,
-                    'icon' => $item->icon,
-                    'type' => $item->type,
-                    'key' => $item->key,
-                    'parent' => $coursesections,
-                    'action' => $item->action
-                ]));
-            }
-        }
-
-        $flatnav->add($coursesections, $participantsitem->key);
     }
 }
 
