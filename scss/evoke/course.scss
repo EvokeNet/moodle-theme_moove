@@ -22,3 +22,14 @@ body.pagelayout-course {
     }
   }
 }
+
+.section .activity .contentwithoutlink > a,
+.section .activity .activityinstance > a {
+  font-size: 1.5rem;
+  color: #140f3f;
+}
+
+img.activityicon {
+  height: 32px;
+  width: 32px;
+}

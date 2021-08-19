@@ -13,6 +13,11 @@ $purple: #9933ff !default;
 $cyclamen: #ff66ff !default;
 $backgroundgray: #f7f7f7 !default;
 
+h1,
+.h1 {
+  font-size: 3.25rem
+}
+
 nav.navbar {
   background: #000000;
   background-image: linear-gradient(
@@ -291,10 +296,16 @@ nav.navbar {
   }
 }
 
+.page-context-header .page-header-headings,
+.page-context-header .header-button-group {
+  padding-top: 18px;
+}
+
 @media (min-width: 1200px) {
   .pagelayout-incourse {
     #page {
-      padding: 2rem 12rem;
+      max-width: 980px;
+      margin-left: 0;
     }
   }
 }
