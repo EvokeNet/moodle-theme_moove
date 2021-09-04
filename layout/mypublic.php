@@ -86,8 +86,13 @@ $usercourses = \theme_moove\util\extras::user_courses_with_progress($user);
 $templatecontext['hascourses'] = (count($usercourses)) ? true : false;
 $templatecontext['courses'] = array_values($usercourses);
 $templatecontext['user'] = $user;
-$templatecontext['user']->profilepicture = \theme_moove\util\extras::get_user_picture($user, 100);
 $templatecontext['user']->fullname = fullname($user);
+$templatecontext['user']->profilepicture = \theme_moove\util\extras::get_user_picture($user, 100);
+
+if (class_exists(\block_game\util\user::class)) {
+    $gameuserutil = new \block_game\util\user($user, $OUTPUT);
+    $templatecontext['user']->profilepicture = $gameuserutil->get_user_avatar_or_image();
+}
 
 $competencyplans = \theme_moove\util\extras::get_user_competency_plans($user);
 $templatecontext['hascompetencyplans'] = (count($competencyplans)) ? true : false;

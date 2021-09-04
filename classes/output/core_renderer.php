@@ -47,7 +47,21 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright  2017 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class core_renderer extends \theme_boost\output\core_renderer {
+class core_renderer extends \core_renderer
+{
+    public function edit_button(moodle_url $url)
+    {
+        $url->param('sesskey', sesskey());
+        if ($this->page->user_is_editing()) {
+            $url->param('edit', 'off');
+            $editstring = get_string('turneditingoff');
+        } else {
+            $url->param('edit', 'on');
+            $editstring = get_string('turneditingon');
+        }
+        $button = new \single_button($url, $editstring, 'post', ['class' => 'btn btn-primary']);
+        return $this->render_single_button($button);
+    }
 
     /**
      * Renders the custom menu
@@ -55,7 +69,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param custom_menu $menu
      * @return mixed
      */
-    protected function render_custom_menu(custom_menu $menu) {
+    protected function render_custom_menu(custom_menu $menu)
+    {
         if (!$menu->has_children()) {
             return '';
         }
@@ -74,7 +89,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return mixed
      */
-    public function render_lang_menu() {
+    public function render_lang_menu()
+    {
         $langs = get_string_manager()->get_list_of_translations();
         $haslangmenu = $this->lang_menu() != '';
         $menu = new custom_menu;
@@ -107,7 +123,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string HTML to display the main header.
      */
-    public function mydashboard_admin_header() {
+    public function mydashboard_admin_header()
+    {
         $html = html_writer::start_div('row');
         $html .= html_writer::start_div('col-md-12 py-2');
 
@@ -133,7 +150,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param \core_auth\output\login $form The renderable.
      * @return string
      */
-    public function render_login(\core_auth\output\login $form) {
+    public function render_login(\core_auth\output\login $form)
+    {
         global $CFG, $SITE;
 
         $context = $form->export_for_template($this);
@@ -160,7 +178,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param mform $form
      * @return string
      */
-    public function render_login_signup_form($form) {
+    public function render_login_signup_form($form)
+    {
         global $SITE;
 
         $context = $form->export_for_template($this);
@@ -181,7 +200,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return mixed
      */
-    public function get_logo() {
+    public function get_logo()
+    {
         if ($this->should_display_theme_logo()) {
             return $this->get_theme_logo_url();
         }
@@ -199,7 +219,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string an URL.
      */
-    public function get_pix_image_url_base() {
+    public function get_pix_image_url_base()
+    {
         global $CFG;
 
         return $CFG->wwwroot . "/theme/moove/pix";
@@ -210,7 +231,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return bool
      */
-    public function should_display_theme_logo() {
+    public function should_display_theme_logo()
+    {
         $logo = $this->get_theme_logo_url();
 
         return !empty($logo);
@@ -219,10 +241,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Returns the moodle_url for the favicon.
      *
-     * @since Moodle 2.5.1 2.6
      * @return moodle_url The moodle_url for the favicon
+     * @since Moodle 2.5.1 2.6
      */
-    public function favicon() {
+    public function favicon()
+    {
         global $CFG;
 
         $theme = theme_config::load('moove');
@@ -244,7 +267,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string
      */
-    public function get_theme_logo_url() {
+    public function get_theme_logo_url()
+    {
         $theme = theme_config::load('moove');
 
         return $theme->setting_file_url('logo', 'logo');
@@ -255,7 +279,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return mixed
      */
-    public function get_identity_providers() {
+    public function get_identity_providers()
+    {
         global $CFG;
 
         $authsequence = get_enabled_auth_plugins(true);
@@ -272,7 +297,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return mixed
      */
-    public function has_identity_providers() {
+    public function has_identity_providers()
+    {
         global $CFG;
 
         $authsequence = get_enabled_auth_plugins(true);
@@ -292,8 +318,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param bool $withlinks true if a dropdown should be built.
      * @return string HTML fragment.
      */
-    public function user_menu($user = null, $withlinks = null) {
-        global $USER, $CFG;
+    public function user_menu($user = null, $withlinks = null)
+    {
+        global $USER, $CFG, $OUTPUT;
         require_once($CFG->dirroot . '/user/lib.php');
 
         if (is_null($user)) {
@@ -358,7 +385,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (isguestuser()) {
             $returnstr = get_string('loggedinasguest');
             if (!$loginpage && $withlinks) {
-                $returnstr .= " (<a href=\"$loginurl\">".get_string('login').'</a>)';
+                $returnstr .= " (<a href=\"$loginurl\">" . get_string('login') . '</a>)';
             }
 
             return html_writer::tag(
@@ -373,6 +400,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Get some navigation opts.
         $opts = user_get_user_navigation_info($user, $this->page);
+
+        if (class_exists(\block_game\util\user::class)) {
+            $gameuserutil = new \block_game\util\user($user, $OUTPUT);
+            $opts->metadata['useravatar'] = html_writer::img($gameuserutil->get_user_avatar_or_image(), fullname($user), ['class' => 'userpicture', 'width' => 35, 'height' => 35]);
+        }
 
         $avatarclasses = "avatars";
         $avatarcontents = html_writer::span($opts->metadata['useravatar'], 'avatar current');
@@ -484,10 +516,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             $pix = new pix_icon($value->pix, $value->title, null, array('class' => 'iconsmall'));
                         } else if (isset($value->imgsrc) && !empty($value->imgsrc)) {
                             $value->title = html_writer::img(
-                                $value->imgsrc,
-                                $value->title,
-                                array('class' => 'iconsmall')
-                            ) . $value->title;
+                                    $value->imgsrc,
+                                    $value->title,
+                                    array('class' => 'iconsmall')
+                                ) . $value->title;
                         }
 
                         $amls = new action_menu_link_secondary(
@@ -524,7 +556,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string
      */
-    public function secure_login_info() {
+    public function secure_login_info()
+    {
         return $this->login_info(false);
     }
 
@@ -534,7 +567,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @param help_icon $helpicon A help icon instance
      * @return string HTML fragment
      */
-    public function render_help_icon(help_icon $helpicon) {
+    public function render_help_icon(help_icon $helpicon)
+    {
         $context = $helpicon->export_for_template($this);
         // Solving the issue - "Your progress" help tooltip in course home page displays in outside the screen display.
         // Check issue https://github.com/willianmano/moodle-theme_moove/issues/5.
@@ -548,10 +582,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Returns a search box.
      *
-     * @param  string $identifier The search box wrapper div id, defaults to an autogenerated one.
+     * @param string $identifier The search box wrapper div id, defaults to an autogenerated one.
      * @return string HTML with the search form hidden by default.
      */
-    public function search_box($identifier = false) {
+    public function search_box($identifier = false)
+    {
         global $CFG;
 
         // Accessing $CFG directly as using \core_search::is_global_search_enabled would
@@ -570,10 +605,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // JS to animate the form.
         $iconattrs = array(
-                        'class' => 'slicon-magnifier',
-                        'title' => get_string('search', 'search'),
-                        'aria-label' => get_string('search', 'search'),
-                        'aria-hidden' => 'true');
+            'class' => 'slicon-magnifier',
+            'title' => get_string('search', 'search'),
+            'aria-label' => get_string('search', 'search'),
+            'aria-hidden' => 'true');
         $searchicon = html_writer::tag('i', '', $iconattrs);
 
         $formattrs = array('class' => 'search-input-form', 'action' => $CFG->wwwroot . '/search/index.php');
@@ -581,15 +616,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'size' => 13, 'tabindex' => -1, 'id' => 'id_q_' . $identifier, 'class' => 'form-control');
 
         $contents = html_writer::tag('label', get_string('enteryoursearchquery', 'search'),
-            array('for' => 'id_q_' . $identifier, 'class' => 'accesshide')) . html_writer::tag('input', '', $inputattrs);
+                array('for' => 'id_q_' . $identifier, 'class' => 'accesshide')) . html_writer::tag('input', '', $inputattrs);
 
         $btnclose = '<a class="close-search"><i class="fa fa-times"></i></a>';
 
         $searchinput = html_writer::tag('form', $contents . $btnclose, $formattrs);
 
         return html_writer::tag('div',
-                                $searchicon . $searchinput,
-                                array('class' => 'moove-search-input nav-link', 'id' => $identifier));
+            $searchicon . $searchinput,
+            array('class' => 'moove-search-input nav-link', 'id' => $identifier));
     }
 
     /**
@@ -599,7 +634,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string HTML fragment.
      */
-    public function standard_head_html() {
+    public function standard_head_html()
+    {
         $output = parent::standard_head_html();
 
         $googleanalyticscode = "<script
@@ -629,7 +665,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string HTML fragment.
      */
-    public function courseheaderimage() {
+    public function courseheaderimage()
+    {
         global $CFG, $COURSE, $DB;
 
         $course = $DB->get_record('course', ['id' => $COURSE->id]);
@@ -641,8 +678,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         foreach ($course->get_course_overviewfiles() as $file) {
             $isimage = $file->is_valid_image();
 
-            $url = new moodle_url("$CFG->wwwroot/pluginfile.php" . '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
-                $file->get_filearea(). $file->get_filepath(). $file->get_filename(), ['forcedownload' => !$isimage]);
+            $url = new moodle_url("$CFG->wwwroot/pluginfile.php" . '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
+                $file->get_filearea() . $file->get_filepath() . $file->get_filename(), ['forcedownload' => !$isimage]);
 
             if ($isimage) {
                 $courseimage = $url;
@@ -680,7 +717,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string HTML fragment.
      */
-    public function standard_footer_html() {
+    public function standard_footer_html()
+    {
         global $CFG, $SCRIPT;
 
         $output = '<div class="plugins_standard_footer_html">';
@@ -749,7 +787,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @throws \dml_exception
      * @throws \moodle_exception
      */
-    private function get_dataprivacyurl() {
+    private function get_dataprivacyurl()
+    {
         $output = '';
 
         // A returned 0 means that the setting was set and disabled, false means that there is no value for the provided setting.
@@ -779,13 +818,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @throws \coding_exception
      */
-    private function get_mobileappurl() {
+    private function get_mobileappurl()
+    {
         global $CFG;
         $output = '';
         if (!empty($CFG->enablemobilewebservice) && $url = tool_mobile_create_app_download_url()) {
             $url = html_writer::link($url,
-                                "<i class='slicon-screen-smartphone'></i> ".get_string('getmoodleonyourmobile', 'tool_mobile'),
-                                     ['class' => 'btn btn-primary']);
+                "<i class='slicon-screen-smartphone'></i> " . get_string('getmoodleonyourmobile', 'tool_mobile'),
+                ['class' => 'btn btn-primary']);
 
             $output .= html_writer::div($url, 'mobilefooter mb-2');
         }
@@ -801,14 +841,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function breadcrumb_header() {
+    public function breadcrumb_header()
+    {
         $header = new stdClass();
         $header->hasnavbar = empty($this->page->layout_options['nonavbar']);
         $header->navbar = $this->navbar();
 
         $header->contextheader = $this->context_header();
         if ($this->page->pagelayout == 'mypublic') {
-            $header->contextheader = "<h2>". get_string('userprofile', 'theme_moove') ."</h2>";
+            $header->contextheader = "<h2>" . get_string('userprofile', 'theme_moove') . "</h2>";
         }
 
         return $this->render_from_template('theme_moove/breadcrumb', $header);
@@ -825,7 +866,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @since Moodle 2.5.1 2.6
      */
-    public function body_attributes($additionalclasses = array()) {
+    public function body_attributes($additionalclasses = array())
+    {
         $hasaccessibilitybar = get_user_preferences('thememoovesettings_enableaccessibilitytoolbar', '');
         if ($hasaccessibilitybar) {
             $additionalclasses[] = 'hasaccessibilitybar';
@@ -850,6 +892,73 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $additionalclasses = explode(' ', $additionalclasses);
         }
 
-        return ' id="'. $this->body_id().'" class="'.$this->body_css_classes($additionalclasses).'"';
+        return ' id="' . $this->body_id() . '" class="' . $this->body_css_classes($additionalclasses) . '"';
+    }
+
+    /**
+     * Renders the header bar.
+     *
+     * @param context_header $contextheader Header bar object.
+     * @return string HTML for the header bar.
+     */
+    protected function render_context_header(\context_header $contextheader) {
+
+        // Generate the heading first and before everything else as we might have to do an early return.
+        if (!isset($contextheader->heading)) {
+            $heading = $this->heading($this->page->heading, $contextheader->headinglevel);
+        } else {
+            $heading = $this->heading($contextheader->heading, $contextheader->headinglevel);
+        }
+
+        $showheader = empty($this->page->layout_options['nocontextheader']);
+        if (!$showheader) {
+            // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
+            return html_writer::div($heading, 'sr-only');
+        }
+
+        // All the html stuff goes here.
+        $html = html_writer::start_div('page-context-header');
+
+        // Image data.
+        if (isset($contextheader->imagedata)) {
+            // Header specific image.
+            $html .= html_writer::div($contextheader->imagedata, 'page-header-image');
+        }
+
+        if ($this->page->pagelayout != 'course' && $this->page->pagelayout != 'incourse') {
+            // Headings.
+            $html .= html_writer::tag('div', $heading, array('class' => 'page-header-headings'));
+        }
+
+        // Buttons.
+        if (isset($contextheader->additionalbuttons)) {
+            $html .= html_writer::start_div('btn-group header-button-group');
+            foreach ($contextheader->additionalbuttons as $button) {
+                if (!isset($button->page)) {
+                    // Include js for messaging.
+                    if ($button['buttontype'] === 'togglecontact') {
+                        \core_message\helper::togglecontact_requirejs();
+                    }
+                    if ($button['buttontype'] === 'message') {
+                        \core_message\helper::messageuser_requirejs();
+                    }
+                    $image = $this->pix_icon($button['formattedimage'], $button['title'], 'moodle', array(
+                        'class' => 'iconsmall',
+                        'role' => 'presentation'
+                    ));
+                    $image .= html_writer::span($button['title'], 'header-button-title');
+                } else {
+                    $image = html_writer::empty_tag('img', array(
+                        'src' => $button['formattedimage'],
+                        'role' => 'presentation'
+                    ));
+                }
+                $html .= html_writer::link($button['url'], html_writer::tag('span', $image), $button['linkattributes']);
+            }
+            $html .= html_writer::end_div();
+        }
+        $html .= html_writer::end_div();
+
+        return $html;
     }
 }
