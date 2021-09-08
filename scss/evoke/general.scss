@@ -250,6 +250,8 @@ nav.navbar {
     background-color: initial;
 
     li {
+      display: none;
+
       .no-link {
         background-color: initial;
         border-color: initial;
@@ -257,6 +259,10 @@ nav.navbar {
 
       &:first-of-type > * {
         padding-left: 0;
+      }
+
+      &:last-of-type {
+        display: inline-block;
       }
 
       &:last-of-type > * {

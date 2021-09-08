@@ -925,10 +925,11 @@ class core_renderer extends \core_renderer
             $html .= html_writer::div($contextheader->imagedata, 'page-header-image');
         }
 
-        if ($this->page->pagelayout != 'course' && $this->page->pagelayout != 'incourse') {
+        // Hide the course and incourse header.
+//        if ($this->page->pagelayout != 'course' && $this->page->pagelayout != 'incourse') {
             // Headings.
             $html .= html_writer::tag('div', $heading, array('class' => 'page-header-headings'));
-        }
+//        }
 
         // Buttons.
         if (isset($contextheader->additionalbuttons)) {
