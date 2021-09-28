@@ -307,6 +307,16 @@ nav.navbar {
   padding-top: 18px;
 }
 
+#nav-drawer {
+  .list-group {
+    .list-group-item {
+      &[data-key="portfolios"] a:before {
+        content: "\e04b";
+      }
+    }
+  }
+}
+
 @media (min-width: 1200px) {
   .pagelayout-incourse {
     #page {

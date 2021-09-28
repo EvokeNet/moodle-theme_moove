@@ -288,6 +288,8 @@ function theme_moove_extend_flat_navigation(\flat_navigation $flatnav) {
     theme_moove_add_coursesections_to_navigation($flatnav);
 
     theme_moove_rename_menuitems($flatnav);
+
+    theme_moove_add_evokeportfolio_menuitems($flatnav);
 }
 
 /**
@@ -432,6 +434,43 @@ function theme_moove_rename_menuitems(\flat_navigation $flatnav) {
     if ($item) {
         $item->text = get_string('myactivecourses', 'theme_moove');
     }
+}
+
+/**
+ * Add portfolio index link in navigation
+ *
+ * @param flat_navigation $flatnav
+ */
+function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
+    global $COURSE;
+
+    $evokeportfolio = \core_plugin_manager::instance()->get_plugin_info('mod_evokeportfolio');
+
+    if (!$evokeportfolio) {
+        return false;
+    }
+
+    if ($COURSE->id < 2) {
+        return false;
+    }
+
+    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
+
+    $actionurl = new moodle_url('/mod/evokeportfolio/index.php', ['id' => $COURSE->id]);
+
+    $certificatesitemoptions = [
+        'action' => $actionurl,
+        'text' => get_string('portfolios', 'theme_moove'),
+        'shorttext' => get_string('portfolios', 'theme_moove'),
+        'icon' => new pix_icon('a/setting', ''),
+        'type' => \navigation_node::TYPE_SETTING,
+        'key' => 'portfolios',
+        'parent' => $participantsitem->parent
+    ];
+
+    $certificatesitem = new \flat_navigation_node($certificatesitemoptions, 0);
+
+    $flatnav->add($certificatesitem, $participantsitem->key);
 }
 
 /**
