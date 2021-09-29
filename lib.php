@@ -454,23 +454,48 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
         return false;
     }
 
+    $context = context_course::instance($COURSE->id);
+
     $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
 
-    $actionurl = new moodle_url('/mod/evokeportfolio/index.php', ['id' => $COURSE->id]);
+    $cangrade = has_capability('mod/evokeportfolio:grade', $context);
+    $cansubmit = has_capability('mod/evokeportfolio:submit', $context);
 
-    $certificatesitemoptions = [
-        'action' => $actionurl,
-        'text' => get_string('portfolios', 'theme_moove'),
-        'shorttext' => get_string('portfolios', 'theme_moove'),
-        'icon' => new pix_icon('a/setting', ''),
-        'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'portfolios',
-        'parent' => $participantsitem->parent
-    ];
+    if ($cangrade) {
+        $actionurl = new moodle_url('/mod/evokeportfolio/gradingchapters.php', ['id' => $COURSE->id]);
 
-    $certificatesitem = new \flat_navigation_node($certificatesitemoptions, 0);
+        $menuitemoptions = [
+            'action' => $actionurl,
+            'text' => get_string('portfoliograding', 'theme_moove'),
+            'shorttext' => get_string('portfoliograding', 'theme_moove'),
+            'icon' => new pix_icon('a/setting', ''),
+            'type' => \navigation_node::TYPE_SETTING,
+            'key' => 'portfolios',
+            'parent' => $participantsitem->parent
+        ];
 
-    $flatnav->add($certificatesitem, $participantsitem->key);
+        $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+        $flatnav->add($menuitem, $participantsitem->key);
+    }
+
+    if (!$cangrade && $cansubmit) {
+        $actionurl = new moodle_url('/mod/evokeportfolio/index.php', ['id' => $COURSE->id]);
+
+        $menuitemoptions = [
+            'action' => $actionurl,
+            'text' => get_string('portfolios', 'theme_moove'),
+            'shorttext' => get_string('portfolios', 'theme_moove'),
+            'icon' => new pix_icon('a/setting', ''),
+            'type' => \navigation_node::TYPE_SETTING,
+            'key' => 'portfolios',
+            'parent' => $participantsitem->parent
+        ];
+
+        $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+        $flatnav->add($menuitem, $participantsitem->key);
+    }
 }
 
 /**

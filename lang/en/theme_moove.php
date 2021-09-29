@@ -287,3 +287,4 @@ $string['evokesettings'] = 'Evoke';
 $string['hvpcss'] = 'H5P CSS';
 $string['hvpcss_desc'] = 'Custom CSS code to be applied on H5P activities';
 $string['portfolios'] = 'My portfolios';
+$string['portfoliograding'] = 'Portfolio grading';
