@@ -29,6 +29,10 @@ nav.navbar {
     background-color: #000000;
   }
 
+  .navbar-brand .logo img {
+    max-height: 30px;
+  }
+
   .navbar-brand .svg_logo_white {
     max-height: 30px;
     width: inherit;
