@@ -455,14 +455,6 @@ function theme_moove_rename_menuitems(\flat_navigation $flatnav) {
  * @param flat_navigation $flatnav
  */
 function theme_moove_add_evokehome_menuitems(\flat_navigation $flatnav) {
-    global $COURSE;
-
-    if ($COURSE->id < 2) {
-        return false;
-    }
-
-    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
-
     $actionurl = new moodle_url('/?redirect=0');
 
     $menuitemoptions = [
@@ -471,13 +463,21 @@ function theme_moove_add_evokehome_menuitems(\flat_navigation $flatnav) {
         'shorttext' => get_string('sitehome'),
         'icon' => new pix_icon('a/setting', ''),
         'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'evokehome',
-        'parent' => $participantsitem->parent
+        'key' => 'evokehome'
     ];
+
+    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
+
+    $parentkey = null;
+    if ($participantsitem) {
+        $parentkey = $participantsitem->key;
+
+        $menuitemoptions['parent'] = $participantsitem->parent;
+    }
 
     $menuitem = new \flat_navigation_node($menuitemoptions, 0);
 
-    $flatnav->add($menuitem, $participantsitem->key);
+    $flatnav->add($menuitem, $parentkey);
 }
 
 /**
@@ -514,13 +514,19 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
             'shorttext' => get_string('portfoliograding', 'theme_moove'),
             'icon' => new pix_icon('a/setting', ''),
             'type' => \navigation_node::TYPE_SETTING,
-            'key' => 'portfolios',
-            'parent' => $participantsitem->parent
+            'key' => 'portfolios'
         ];
+
+        $parentkey = null;
+        if ($participantsitem) {
+            $parentkey = $participantsitem->key;
+
+            $menuitemoptions['parent'] = $participantsitem->parent;
+        }
 
         $menuitem = new \flat_navigation_node($menuitemoptions, 0);
 
-        $flatnav->add($menuitem, $participantsitem->key);
+        $flatnav->add($menuitem, $parentkey);
     }
 
     if (!$cangrade && $cansubmit) {
@@ -532,13 +538,19 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
             'shorttext' => get_string('portfolios', 'theme_moove'),
             'icon' => new pix_icon('a/setting', ''),
             'type' => \navigation_node::TYPE_SETTING,
-            'key' => 'portfolios',
-            'parent' => $participantsitem->parent
+            'key' => 'portfolios'
         ];
+
+        $parentkey = null;
+        if ($participantsitem) {
+            $parentkey = $participantsitem->key;
+
+            $menuitemoptions['parent'] = $participantsitem->parent;
+        }
 
         $menuitem = new \flat_navigation_node($menuitemoptions, 0);
 
-        $flatnav->add($menuitem, $participantsitem->key);
+        $flatnav->add($menuitem, $parentkey);
     }
 }
 
@@ -572,13 +584,19 @@ function theme_moove_add_chat_menuitems(\flat_navigation $flatnav) {
         'shorttext' => get_string('groupchat', 'theme_moove'),
         'icon' => new pix_icon('a/setting', ''),
         'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'chatincourse',
-        'parent' => $participantsitem->parent
+        'key' => 'chatincourse'
     ];
+
+    $parentkey = null;
+    if ($participantsitem) {
+        $parentkey = $participantsitem->key;
+
+        $menuitemoptions['parent'] = $participantsitem->parent;
+    }
 
     $menuitem = new \flat_navigation_node($menuitemoptions, 0);
 
-    $flatnav->add($menuitem, $participantsitem->key);
+    $flatnav->add($menuitem, $parentkey);
 }
 
 /**
@@ -603,13 +621,19 @@ function theme_moove_add_superpowers_menuitems(\flat_navigation $flatnav) {
         'shorttext' => get_string('superpowers', 'theme_moove'),
         'icon' => new pix_icon('a/setting', ''),
         'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'superpowers',
-        'parent' => $participantsitem->parent
+        'key' => 'superpowers'
     ];
+
+    $parentkey = null;
+    if ($participantsitem) {
+        $parentkey = $participantsitem->key;
+
+        $menuitemoptions['parent'] = $participantsitem->parent;
+    }
 
     $menuitem = new \flat_navigation_node($menuitemoptions, 0);
 
-    $flatnav->add($menuitem, $participantsitem->key);
+    $flatnav->add($menuitem, $parentkey);
 }
 
 /**
