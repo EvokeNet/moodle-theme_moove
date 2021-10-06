@@ -281,3 +281,12 @@ $string['privacy:accessibilitystyles_fontsizeclass'] = 'A preferência atual par
 $string['privacy:accessibilitystyles_sitecolorclass'] = 'A preferência atual para a cor do site é: {$a}.';
 $string['privacy:thememoovesettings_fonttype'] = 'A preferência atual para o tipo de fonte é: {$a}.';
 $string['privacy:thememoovesettings_enableaccessibilitytoolbar'] = 'A preferência atual para habilitar a barra de acessibilidade é para exibi-lá';
+
+$string['evokesettings'] = 'Evoke';
+$string['hvpcss'] = 'H5P CSS';
+$string['hvpcss_desc'] = 'Código CSS customnizado para ser aplicado em atividades H5P';
+$string['portfolios'] = 'Meus portfolios';
+$string['portfoliograding'] = 'Avaliação dos Portfolios';
+
+$string['groupchat'] = 'Chat em grupo';
+$string['superpowers'] = 'Super poderes';

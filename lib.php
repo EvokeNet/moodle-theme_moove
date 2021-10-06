@@ -290,6 +290,10 @@ function theme_moove_extend_flat_navigation(\flat_navigation $flatnav) {
     theme_moove_rename_menuitems($flatnav);
 
     theme_moove_add_evokeportfolio_menuitems($flatnav);
+
+    theme_moove_add_chat_menuitems($flatnav);
+
+    theme_moove_add_superpowers_menuitems($flatnav);
 }
 
 /**
@@ -357,7 +361,10 @@ function theme_moove_add_certificatesmenuitem(\flat_navigation $flatnav) {
 function theme_moove_delete_menuitems(\flat_navigation $flatnav) {
 
     $itemstodelete = [
-        'coursehome'
+        'coursehome',
+        'badgesview',
+        'competencies',
+        'grades'
     ];
 
     foreach ($flatnav as $item) {
@@ -496,6 +503,76 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
 
         $flatnav->add($menuitem, $participantsitem->key);
     }
+}
+
+/**
+ * Add chat link in navigation
+ *
+ * @param flat_navigation $flatnav
+ */
+function theme_moove_add_chat_menuitems(\flat_navigation $flatnav) {
+    global $COURSE;
+
+    if ($COURSE->id < 2) {
+        return false;
+    }
+
+    $chatsincourse = get_coursemodules_in_course('chat', $COURSE->id);
+
+    if (!$chatsincourse) {
+        return;
+    }
+
+    $currentchat = current($chatsincourse);
+
+    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
+
+    $actionurl = new moodle_url('/mod/chat/view.php', ['id' => $currentchat->id]);
+
+    $menuitemoptions = [
+        'action' => $actionurl,
+        'text' => get_string('groupchat', 'theme_moove'),
+        'shorttext' => get_string('groupchat', 'theme_moove'),
+        'icon' => new pix_icon('a/setting', ''),
+        'type' => \navigation_node::TYPE_SETTING,
+        'key' => 'chatincourse',
+        'parent' => $participantsitem->parent
+    ];
+
+    $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+    $flatnav->add($menuitem, $participantsitem->key);
+}
+
+/**
+ * Add superpowers index link in navigation
+ *
+ * @param flat_navigation $flatnav
+ */
+function theme_moove_add_superpowers_menuitems(\flat_navigation $flatnav) {
+    global $COURSE;
+
+    if ($COURSE->id < 2) {
+        return false;
+    }
+
+    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
+
+    $actionurl = new moodle_url('/blocks/game/rank_game.php', ['id' => $COURSE->id]);
+
+    $menuitemoptions = [
+        'action' => $actionurl,
+        'text' => get_string('superpowers', 'theme_moove'),
+        'shorttext' => get_string('superpowers', 'theme_moove'),
+        'icon' => new pix_icon('a/setting', ''),
+        'type' => \navigation_node::TYPE_SETTING,
+        'key' => 'superpowers',
+        'parent' => $participantsitem->parent
+    ];
+
+    $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+    $flatnav->add($menuitem, $participantsitem->key);
 }
 
 /**

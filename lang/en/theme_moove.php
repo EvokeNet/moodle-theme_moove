@@ -288,3 +288,6 @@ $string['hvpcss'] = 'H5P CSS';
 $string['hvpcss_desc'] = 'Custom CSS code to be applied on H5P activities';
 $string['portfolios'] = 'My portfolios';
 $string['portfoliograding'] = 'Portfolio grading';
+
+$string['groupchat'] = 'Group chat';
+$string['superpowers'] = 'Superpowers';
