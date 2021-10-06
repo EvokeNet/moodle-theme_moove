@@ -314,6 +314,9 @@ nav.navbar {
 #nav-drawer {
   .list-group {
     .list-group-item {
+      &[data-key="evokehome"] a:before {
+        content: "\e069";
+      }
       &[data-key="portfolios"] a:before {
         content: "\e04b";
       }

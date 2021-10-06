@@ -289,6 +289,8 @@ function theme_moove_extend_flat_navigation(\flat_navigation $flatnav) {
 
     theme_moove_rename_menuitems($flatnav);
 
+    theme_moove_add_evokehome_menuitems($flatnav);
+
     theme_moove_add_evokeportfolio_menuitems($flatnav);
 
     theme_moove_add_chat_menuitems($flatnav);
@@ -364,7 +366,11 @@ function theme_moove_delete_menuitems(\flat_navigation $flatnav) {
         'coursehome',
         'badgesview',
         'competencies',
-        'grades'
+        'grades',
+        'home',
+        'myhome',
+        'calendar',
+        'privatefiles'
     ];
 
     foreach ($flatnav as $item) {
@@ -441,6 +447,37 @@ function theme_moove_rename_menuitems(\flat_navigation $flatnav) {
     if ($item) {
         $item->text = get_string('myactivecourses', 'theme_moove');
     }
+}
+
+/**
+ * Add portfolio index link in navigation
+ *
+ * @param flat_navigation $flatnav
+ */
+function theme_moove_add_evokehome_menuitems(\flat_navigation $flatnav) {
+    global $COURSE;
+
+    if ($COURSE->id < 2) {
+        return false;
+    }
+
+    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
+
+    $actionurl = new moodle_url('/?redirect=0');
+
+    $menuitemoptions = [
+        'action' => $actionurl,
+        'text' => get_string('sitehome'),
+        'shorttext' => get_string('sitehome'),
+        'icon' => new pix_icon('a/setting', ''),
+        'type' => \navigation_node::TYPE_SETTING,
+        'key' => 'evokehome',
+        'parent' => $participantsitem->parent
+    ];
+
+    $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+    $flatnav->add($menuitem, $participantsitem->key);
 }
 
 /**
