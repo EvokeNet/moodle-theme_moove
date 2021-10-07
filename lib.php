@@ -92,7 +92,7 @@ function theme_moove_set_loginbgimg($theme) {
     $loginbgimg = $theme->setting_file_url('loginbgimg', 'loginbgimg');
 
     if ($loginbgimg) {
-        $headercss = "#page-login-index.moove-login #page-wrapper #page {background-image: url('$loginbgimg')!important; background-size: cover;}";
+        $headercss = "#page-login-index.moove-login #page-wrapper #page {background-image: url('$loginbgimg')!important;background-size: cover;}";
 
         return $headercss;
     }
