@@ -47,10 +47,8 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright  2017 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class core_renderer extends \core_renderer
-{
-    public function edit_button(moodle_url $url)
-    {
+class core_renderer extends \core_renderer {
+    public function edit_button(moodle_url $url) {
         $url->param('sesskey', sesskey());
         if ($this->page->user_is_editing()) {
             $url->param('edit', 'off');
@@ -69,8 +67,7 @@ class core_renderer extends \core_renderer
      * @param custom_menu $menu
      * @return mixed
      */
-    protected function render_custom_menu(custom_menu $menu)
-    {
+    protected function render_custom_menu(custom_menu $menu) {
         if (!$menu->has_children()) {
             return '';
         }
@@ -89,8 +86,7 @@ class core_renderer extends \core_renderer
      *
      * @return mixed
      */
-    public function render_lang_menu()
-    {
+    public function render_lang_menu() {
         $langs = get_string_manager()->get_list_of_translations();
         $haslangmenu = $this->lang_menu() != '';
         $menu = new custom_menu;
@@ -123,8 +119,7 @@ class core_renderer extends \core_renderer
      *
      * @return string HTML to display the main header.
      */
-    public function mydashboard_admin_header()
-    {
+    public function mydashboard_admin_header() {
         $html = html_writer::start_div('row');
         $html .= html_writer::start_div('col-md-12 py-2');
 
@@ -150,8 +145,7 @@ class core_renderer extends \core_renderer
      * @param \core_auth\output\login $form The renderable.
      * @return string
      */
-    public function render_login(\core_auth\output\login $form)
-    {
+    public function render_login(\core_auth\output\login $form) {
         global $CFG, $SITE;
 
         $context = $form->export_for_template($this);
@@ -178,8 +172,7 @@ class core_renderer extends \core_renderer
      * @param mform $form
      * @return string
      */
-    public function render_login_signup_form($form)
-    {
+    public function render_login_signup_form($form) {
         global $SITE;
 
         $context = $form->export_for_template($this);
@@ -200,8 +193,7 @@ class core_renderer extends \core_renderer
      *
      * @return mixed
      */
-    public function get_logo()
-    {
+    public function get_logo() {
         if ($this->should_display_theme_logo()) {
             return $this->get_theme_logo_url();
         }
@@ -219,8 +211,7 @@ class core_renderer extends \core_renderer
      *
      * @return string an URL.
      */
-    public function get_pix_image_url_base()
-    {
+    public function get_pix_image_url_base() {
         global $CFG;
 
         return $CFG->wwwroot . "/theme/moove/pix";
@@ -231,8 +222,7 @@ class core_renderer extends \core_renderer
      *
      * @return bool
      */
-    public function should_display_theme_logo()
-    {
+    public function should_display_theme_logo() {
         $logo = $this->get_theme_logo_url();
 
         return !empty($logo);
@@ -244,8 +234,7 @@ class core_renderer extends \core_renderer
      * @return moodle_url The moodle_url for the favicon
      * @since Moodle 2.5.1 2.6
      */
-    public function favicon()
-    {
+    public function favicon() {
         global $CFG;
 
         $theme = theme_config::load('moove');
@@ -267,8 +256,7 @@ class core_renderer extends \core_renderer
      *
      * @return string
      */
-    public function get_theme_logo_url()
-    {
+    public function get_theme_logo_url() {
         $theme = theme_config::load('moove');
 
         return $theme->setting_file_url('logo', 'logo');
@@ -279,8 +267,7 @@ class core_renderer extends \core_renderer
      *
      * @return mixed
      */
-    public function get_identity_providers()
-    {
+    public function get_identity_providers() {
         global $CFG;
 
         $authsequence = get_enabled_auth_plugins(true);
@@ -297,8 +284,7 @@ class core_renderer extends \core_renderer
      *
      * @return mixed
      */
-    public function has_identity_providers()
-    {
+    public function has_identity_providers() {
         global $CFG;
 
         $authsequence = get_enabled_auth_plugins(true);
@@ -318,8 +304,7 @@ class core_renderer extends \core_renderer
      * @param bool $withlinks true if a dropdown should be built.
      * @return string HTML fragment.
      */
-    public function user_menu($user = null, $withlinks = null)
-    {
+    public function user_menu($user = null, $withlinks = null) {
         global $USER, $CFG, $OUTPUT;
         require_once($CFG->dirroot . '/user/lib.php');
 
@@ -556,8 +541,7 @@ class core_renderer extends \core_renderer
      *
      * @return string
      */
-    public function secure_login_info()
-    {
+    public function secure_login_info() {
         return $this->login_info(false);
     }
 
@@ -567,8 +551,7 @@ class core_renderer extends \core_renderer
      * @param help_icon $helpicon A help icon instance
      * @return string HTML fragment
      */
-    public function render_help_icon(help_icon $helpicon)
-    {
+    public function render_help_icon(help_icon $helpicon) {
         $context = $helpicon->export_for_template($this);
         // Solving the issue - "Your progress" help tooltip in course home page displays in outside the screen display.
         // Check issue https://github.com/willianmano/moodle-theme_moove/issues/5.
@@ -585,8 +568,7 @@ class core_renderer extends \core_renderer
      * @param string $identifier The search box wrapper div id, defaults to an autogenerated one.
      * @return string HTML with the search form hidden by default.
      */
-    public function search_box($identifier = false)
-    {
+    public function search_box($identifier = false) {
         global $CFG;
 
         // Accessing $CFG directly as using \core_search::is_global_search_enabled would
@@ -634,8 +616,7 @@ class core_renderer extends \core_renderer
      *
      * @return string HTML fragment.
      */
-    public function standard_head_html()
-    {
+    public function standard_head_html() {
         $output = parent::standard_head_html();
 
         $googleanalyticscode = "<script
@@ -665,8 +646,7 @@ class core_renderer extends \core_renderer
      *
      * @return string HTML fragment.
      */
-    public function courseheaderimage()
-    {
+    public function courseheaderimage() {
         global $CFG, $COURSE, $DB;
 
         $course = $DB->get_record('course', ['id' => $COURSE->id]);
@@ -717,8 +697,7 @@ class core_renderer extends \core_renderer
      *
      * @return string HTML fragment.
      */
-    public function standard_footer_html()
-    {
+    public function standard_footer_html() {
         global $CFG, $SCRIPT;
 
         $output = '<div class="plugins_standard_footer_html">';
@@ -787,8 +766,7 @@ class core_renderer extends \core_renderer
      * @throws \dml_exception
      * @throws \moodle_exception
      */
-    private function get_dataprivacyurl()
-    {
+    private function get_dataprivacyurl() {
         $output = '';
 
         // A returned 0 means that the setting was set and disabled, false means that there is no value for the provided setting.
@@ -818,8 +796,7 @@ class core_renderer extends \core_renderer
      *
      * @throws \coding_exception
      */
-    private function get_mobileappurl()
-    {
+    private function get_mobileappurl() {
         global $CFG;
         $output = '';
         if (!empty($CFG->enablemobilewebservice) && $url = tool_mobile_create_app_download_url()) {
@@ -841,8 +818,7 @@ class core_renderer extends \core_renderer
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function breadcrumb_header()
-    {
+    public function breadcrumb_header() {
         $header = new stdClass();
         $header->hasnavbar = empty($this->page->layout_options['nonavbar']);
         $header->navbar = $this->navbar();
@@ -866,8 +842,7 @@ class core_renderer extends \core_renderer
      *
      * @since Moodle 2.5.1 2.6
      */
-    public function body_attributes($additionalclasses = array())
-    {
+    public function body_attributes($additionalclasses = array()) {
         $hasaccessibilitybar = get_user_preferences('thememoovesettings_enableaccessibilitytoolbar', '');
         if ($hasaccessibilitybar) {
             $additionalclasses[] = 'hasaccessibilitybar';
@@ -961,5 +936,23 @@ class core_renderer extends \core_renderer
         $html .= html_writer::end_div();
 
         return $html;
+    }
+
+    /**
+     * This renders the navbar.
+     * Uses bootstrap compatible html.
+     */
+    public function navbar() {
+        $navbaritems = $this->page->navbar->get_items();
+
+        foreach ($navbaritems as $key => $item) {
+            if ($item->key == 'myhome') {
+                unset($navbaritems[$key]);
+            }
+        }
+
+        return $this->render_from_template('core/navbar', [
+            'items' => array_values($navbaritems)
+        ]);
     }
 }

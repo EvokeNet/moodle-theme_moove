@@ -60,13 +60,13 @@
 }}
 <nav>
     <ol class="breadcrumb">
-        {{#get_items}}
+        {{#items}}
             {{#has_action}}
                 <li class="breadcrumb-item"><a href="{{{action}}}" {{#get_title}}title="{{get_title}}"{{/get_title}}>{{{text}}}</a></li>
             {{/has_action}}
             {{^has_action}}
                 <li class="breadcrumb-item"><span class="no-link">{{{text}}}</span></li>
             {{/has_action}}
-        {{/get_items}}
+        {{/items}}
     </ol>
 </nav>
