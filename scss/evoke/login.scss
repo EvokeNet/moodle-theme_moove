@@ -4,11 +4,10 @@
   }
 
   #page-wrapper #page {
-    background: #000000;
-    background-image: linear-gradient(
+    background: #000000 linear-gradient(
                     to right,
                     #000000, $livingblack
-    ) !important;
+    );
   }
 
   .loginpanel {

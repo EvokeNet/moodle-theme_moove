@@ -89,17 +89,13 @@ function theme_moove_set_topfooterimg($theme) {
  * @return string
  */
 function theme_moove_set_loginbgimg($theme) {
-    global $OUTPUT;
-
     $loginbgimg = $theme->setting_file_url('loginbgimg', 'loginbgimg');
 
-    if (is_null($loginbgimg)) {
-        $loginbgimg = $OUTPUT->image_url('login_bg', 'theme');
+    if ($loginbgimg) {
+        $headercss = "#page-login-index.moove-login #page-wrapper #page {background-image: url('$loginbgimg')!important; background-size: cover;}";
+
+        return $headercss;
     }
-
-    $headercss = "#page-login-index.moove-login #page-wrapper #page {background-image: url('$loginbgimg');}";
-
-    return $headercss;
 }
 
 /**
