@@ -1,3 +1,7 @@
+.block_game .card-title {
+    display: none !important;
+}
+
 .block-game-wrapper {
   display: -webkit-flex;
   display: flex;
@@ -5,7 +9,6 @@
   align-items: center;
 
   .awards,
-  .navigation,
   .userinfo{
     flex-direction: row;
   }
@@ -63,11 +66,24 @@
       }
     }
 
+    .navigation .btn {
+      margin-left: 0.5rem;
+      border-radius: 40px;
+      font-size: calc(0.9271875rem + 0.32625vw);
+      padding: 12px;
+
+      .icon {
+        font-size: 22px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
     .badges {
       border-radius: 40px;
       border: 1px solid rgba(0, 240, 166, 1);
       padding: 12px;
-      margin-left: 20px;
+      margin-left: 0.5rem;
 
       .evokebadge {
         width: 32px;
@@ -170,7 +186,6 @@
     flex-flow: column wrap;
 
     .awards,
-    .navigation,
     .userinfo {
       -webkit-flex-direction: column;
       flex-direction: column;
@@ -180,17 +195,23 @@
       flex-flow: row wrap;
     }
 
-    .awards {
-
-    }
-
     .navigation {
-      margin: 2rem 0;
+      .btn {
+        padding: 12px 14px !important;
+
+        .icon {
+          margin-right: 0;
+        }
+
+        .text {
+          display: none;
+        }
+      }
     }
 
     .userinfo {
       flex-direction: row-reverse;
-      margin: 0;
+      margin: 20px 0 0 0;
     }
   }
 }
