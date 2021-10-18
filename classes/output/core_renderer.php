@@ -386,10 +386,9 @@ class core_renderer extends \core_renderer {
         // Get some navigation opts.
         $opts = user_get_user_navigation_info($user, $this->page);
 
-        if (class_exists(\block_game\util\user::class)) {
-            $gameuserutil = new \block_game\util\user($user, $OUTPUT);
-            $opts->metadata['useravatar'] = html_writer::img($gameuserutil->get_user_avatar_or_image(), fullname($user), ['class' => 'userpicture', 'width' => 35, 'height' => 35]);
-        }
+        $userimage = theme_moove_get_user_avatar_or_image($user);
+
+        $opts->metadata['useravatar'] = html_writer::img($userimage, fullname($user), ['class' => 'userpicture', 'width' => 35, 'height' => 35]);
 
         $avatarclasses = "avatars";
         $avatarcontents = html_writer::span($opts->metadata['useravatar'], 'avatar current');
