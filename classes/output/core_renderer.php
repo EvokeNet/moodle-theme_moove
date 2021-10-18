@@ -945,12 +945,6 @@ class core_renderer extends \core_renderer {
     public function navbar() {
         $navbaritems = $this->page->navbar->get_items();
 
-        foreach ($navbaritems as $key => $item) {
-            if ($item->key == 'myhome') {
-                unset($navbaritems[$key]);
-            }
-        }
-
         return $this->render_from_template('core/navbar', [
             'items' => array_values($navbaritems)
         ]);
