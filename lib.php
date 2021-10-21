@@ -759,19 +759,22 @@ function theme_moove_serve_hvp_css($filename, $theme) {
 }
 
 function theme_moove_get_user_avatar_or_image($user = null) {
-    global $USER, $OUTPUT;
+    global $USER, $OUTPUT, $PAGE;
 
     if (!$user) {
         $user = $USER;
     }
 
     if (!class_exists(\block_game\util\user::class)) {
-        return $OUTPUT->user_picture($user, ['size' => 1, 'hspace' => 12]);
+        $userpicture = new \user_picture($user);
+        $userpicture->size = 1;
+
+        return $userpicture->get_url($PAGE);
     }
 
     if (class_exists(\block_game\util\user::class)) {
         $gameuserutil = new \block_game\util\user($user, $OUTPUT);
 
-        return $gameuserutil->get_user_avatar_or_image();
+        return $gameuserutil->get_user_avatar_or_image($PAGE);
     }
 }
