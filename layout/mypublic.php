@@ -91,7 +91,7 @@ $templatecontext['user']->profilepicture = \theme_moove\util\extras::get_user_pi
 
 if (class_exists(\block_game\util\user::class)) {
     $gameuserutil = new \block_game\util\user($user, $OUTPUT);
-    $templatecontext['user']->profilepicture = $gameuserutil->get_user_avatar_or_image();
+    $templatecontext['user']->profilepicture = $gameuserutil->get_user_avatar_or_image($PAGE);
 }
 
 $competencyplans = \theme_moove\util\extras::get_user_competency_plans($user);

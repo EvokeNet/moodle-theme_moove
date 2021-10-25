@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use block_evokehq\util\course;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -496,13 +494,6 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
         return false;
     }
 
-    $courseutil = new course();
-    $portfolio = $courseutil->get_course_portfolio($COURSE->id);
-
-    if (!$portfolio) {
-        return false;
-    }
-
     $context = context_course::instance($COURSE->id);
 
     $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
@@ -511,7 +502,7 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
     $cansubmit = has_capability('mod/evokeportfolio:submit', $context);
 
     if ($cangrade) {
-        $actionurl = new moodle_url('/mod/evokeportfolio/entries.php', ['id' => $portfolio->cmid]);
+        $actionurl = new moodle_url('/mod/evokeportfolio/gradingchapters.php', ['id' => $COURSE->id]);
 
         $menuitemoptions = [
             'action' => $actionurl,
@@ -535,7 +526,7 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
     }
 
     if (!$cangrade && $cansubmit) {
-        $actionurl = new moodle_url('/mod/evokeportfolio/view.php', ['id' => $portfolio->cmid]);
+        $actionurl = new moodle_url('/mod/evokeportfolio/index.php', ['id' => $COURSE->id]);
 
         $menuitemoptions = [
             'action' => $actionurl,
