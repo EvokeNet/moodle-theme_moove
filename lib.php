@@ -766,6 +766,6 @@ function theme_moove_get_user_avatar_or_image($user = null) {
     if (class_exists(\block_game\util\user::class)) {
         $gameuserutil = new \block_game\util\user($user, $OUTPUT);
 
-        return $gameuserutil->get_user_avatar_or_image($PAGE);
+        return $gameuserutil->get_user_avatar_or_image();
     }
 }
