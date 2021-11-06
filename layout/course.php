@@ -57,10 +57,18 @@ if ($coursepresentation == 2) {
     $extraclasses[] = 'coursepresentation-cover';
 }
 
+$context = context_course::instance(SITEID);
+
+$dashboard = '';
+if (class_exists(\local_evokegame\output\evokegame::class)) {
+    $evokegame = new \local_evokegame\output\evokegame();
+    $dashboard = $evokegame->get_dashboard($COURSE, $context);
+}
+
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $regionmainsettingsmenu = $OUTPUT->region_main_settings_menu();
 $templatecontext = [
-    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
+    'sitename' => format_string($SITE->shortname, true, ['context' => $context, "escape" => false]),
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
@@ -71,7 +79,8 @@ $templatecontext = [
     'regionmainsettingsmenu' => $regionmainsettingsmenu,
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'sidepostblockshtml' => $sidepostblockshtml,
-    'hassidepostblocks' => $hassidepostblocks
+    'hassidepostblocks' => $hassidepostblocks,
+    'evokegame_dashboard' => $dashboard
 ];
 
 // Improve boost navigation.

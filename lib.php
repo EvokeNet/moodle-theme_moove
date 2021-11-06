@@ -756,16 +756,14 @@ function theme_moove_get_user_avatar_or_image($user = null) {
         $user = $USER;
     }
 
-    if (!class_exists(\block_game\util\user::class)) {
-        $userpicture = new \user_picture($user);
-        $userpicture->size = 1;
+    if (class_exists(\local_evokegame\util\user::class)) {
+        $userutil = new \local_evokegame\util\user();
 
-        return $userpicture->get_url($PAGE);
+        return $userutil->get_user_avatar_or_image($user);
     }
 
-    if (class_exists(\block_game\util\user::class)) {
-        $gameuserutil = new \block_game\util\user($user, $OUTPUT);
+    $userpicture = new \user_picture($user);
+    $userpicture->size = 1;
 
-        return $gameuserutil->get_user_avatar_or_image();
-    }
+    return $userpicture->get_url($PAGE);
 }
