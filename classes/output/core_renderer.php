@@ -948,4 +948,20 @@ class core_renderer extends \core_renderer {
             'items' => array_values($navbaritems)
         ]);
     }
+
+    public function evokegame_dashboardnavbar() {
+        if (!class_exists(\local_evokegame\output\evokegame::class)) {
+            return false;
+        }
+
+        if ($this->page->course->id == 1) {
+            return false;
+        }
+
+        $context = \context_course::instance($this->page->course->id);
+
+        $evokegame = new \local_evokegame\output\evokegame();
+
+        return $evokegame->get_dashboardnavbar($this->page->course, $context);
+    }
 }

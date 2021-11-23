@@ -59,12 +59,6 @@ if ($coursepresentation == 2) {
 
 $context = context_course::instance(SITEID);
 
-$dashboard = '';
-if (class_exists(\local_evokegame\output\evokegame::class)) {
-    $evokegame = new \local_evokegame\output\evokegame();
-    $dashboard = $evokegame->get_dashboard($COURSE, $context);
-}
-
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $regionmainsettingsmenu = $OUTPUT->region_main_settings_menu();
 $templatecontext = [
@@ -79,8 +73,7 @@ $templatecontext = [
     'regionmainsettingsmenu' => $regionmainsettingsmenu,
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'sidepostblockshtml' => $sidepostblockshtml,
-    'hassidepostblocks' => $hassidepostblocks,
-    'evokegame_dashboard' => $dashboard
+    'hassidepostblocks' => $hassidepostblocks
 ];
 
 // Improve boost navigation.
