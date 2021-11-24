@@ -465,12 +465,31 @@ class core_renderer extends \core_renderer {
             $userinfo = new stdClass();
             $userinfo->itemtype = 'text';
             $userinfo->title = fullname($user);
-            $userinfo->url = new moodle_url('/user/profile.php', array('id' => $user->id));
+            $userinfo->url = new moodle_url('/local/evokegame/profile.php', array('id' => $this->page->course->id));
             $userinfo->pix = 'i/user';
 
             array_unshift($opts->navitems, $userinfo);
 
             foreach ($opts->navitems as $value) {
+                if ($value->pix == 'i/user' && ($value->title == fullname($user) || $value->titleidentifier = 'profile,moodle')) {
+                    $amls = new action_menu_link_secondary(
+                        new moodle_url('/local/evokegame/profile.php', array('id' => $this->page->course->id)),
+                        new pix_icon($value->pix, $value->title, null, array('class' => 'iconsmall')),
+                        $value->title,
+                        array('class' => 'text-username')
+                    );
+
+                    $actionmenu->add($amls);
+
+                    $idx++;
+
+                    // Add dividers after the first item and before the last item.
+                    if ($idx == 1 || $idx == $navitemcount) {
+                        $actionmenu->add($divider);
+                    }
+
+                    continue;
+                }
 
                 switch ($value->itemtype) {
                     case 'divider':
