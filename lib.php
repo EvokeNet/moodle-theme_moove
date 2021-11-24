@@ -289,9 +289,7 @@ function theme_moove_extend_flat_navigation(\flat_navigation $flatnav) {
 
     theme_moove_add_evokeportfolio_menuitems($flatnav);
 
-    theme_moove_add_chat_menuitems($flatnav);
-
-    theme_moove_add_superpowers_menuitems($flatnav);
+    theme_moove_add_evokegame_course_menuitems($flatnav);
 }
 
 /**
@@ -555,81 +553,91 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
  *
  * @param flat_navigation $flatnav
  */
-function theme_moove_add_chat_menuitems(\flat_navigation $flatnav) {
+function theme_moove_add_evokegame_course_menuitems(\flat_navigation $flatnav) {
     global $COURSE;
 
     if ($COURSE->id < 2) {
         return false;
     }
 
-    $chatsincourse = get_coursemodules_in_course('chat', $COURSE->id);
+    $coursemenuitems = get_config('local_evokegame', 'coursemenuitems-' . $COURSE->id);
 
-    if (!$chatsincourse) {
-        return;
+    if (!$coursemenuitems) {
+        return false;
     }
-
-    $currentchat = current($chatsincourse);
 
     $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
 
-    $actionurl = new moodle_url('/mod/chat/view.php', ['id' => $currentchat->id]);
+    $menuitems = theme_moove_convert_text_to_menu_nodes($coursemenuitems, $participantsitem);
 
-    $menuitemoptions = [
-        'action' => $actionurl,
-        'text' => get_string('groupchat', 'theme_moove'),
-        'shorttext' => get_string('groupchat', 'theme_moove'),
-        'icon' => new pix_icon('a/setting', ''),
-        'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'chatincourse'
-    ];
+    if (!$menuitems) {
+        return false;
+    }
 
     $parentkey = null;
     if ($participantsitem) {
         $parentkey = $participantsitem->key;
-
-        $menuitemoptions['parent'] = $participantsitem->parent;
     }
 
-    $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+    foreach ($menuitems as $menuitem) {
+        $menuitem->parent = $participantsitem->parent;
 
-    $flatnav->add($menuitem, $parentkey);
+        $flatnav->add($menuitem, $parentkey);
+    }
 }
 
-/**
- * Add superpowers index link in navigation
- *
- * @param flat_navigation $flatnav
- */
-function theme_moove_add_superpowers_menuitems(\flat_navigation $flatnav) {
-    global $COURSE;
+function theme_moove_convert_text_to_menu_nodes($text) {
+    $lines = explode("\n", $text);
 
-    if ($COURSE->id < 2) {
-        return false;
+    $menuitems = [];
+    foreach ($lines as $linenumber => $line) {
+        $line = trim($line);
+        if (strlen($line) == 0) {
+            continue;
+        }
+        // Parse item settings.
+        $itemtext = null;
+        $itemurl = null;
+        $itemkey = null;
+        $settings = explode('|', $line);
+        foreach ($settings as $i => $setting) {
+            $setting = trim($setting);
+            if (!empty($setting)) {
+                switch ($i) {
+                    case 0: // Menu text.
+                        $itemtext = ltrim($setting, '-');
+                        break;
+                    case 1: // URL.
+                        try {
+                            $itemurl = new moodle_url($setting);
+                        } catch (moodle_exception $exception) {
+                            // We're not actually worried about this, we don't want to mess up the display
+                            // just for a wrongly entered URL.
+                            $itemurl = null;
+                        }
+                        break;
+                    case 2: // KEY.
+                        $itemkey = trim($setting);
+                        break;
+                }
+            }
+        }
+
+        $menuitemoptions = [
+            'action' => $itemurl,
+            'text' => $itemtext,
+            'shorttext' => $itemtext,
+            'icon' => new pix_icon('a/settings', $itemtext),
+            'type' => \navigation_node::TYPE_SETTING,
+            'key' => $itemkey
+        ];
+
+        $menuitem = new \flat_navigation_node($menuitemoptions, 0);
+
+        $menuitems[] = $menuitem;
     }
 
-    $participantsitem = $flatnav->find('participants', \navigation_node::TYPE_CONTAINER);
-
-    $actionurl = new moodle_url('/blocks/game/rank_game.php', ['id' => $COURSE->id]);
-
-    $menuitemoptions = [
-        'action' => $actionurl,
-        'text' => get_string('superpowers', 'theme_moove'),
-        'shorttext' => get_string('superpowers', 'theme_moove'),
-        'icon' => new pix_icon('a/setting', ''),
-        'type' => \navigation_node::TYPE_SETTING,
-        'key' => 'superpowers'
-    ];
-
-    $parentkey = null;
-    if ($participantsitem) {
-        $parentkey = $participantsitem->key;
-
-        $menuitemoptions['parent'] = $participantsitem->parent;
-    }
-
-    $menuitem = new \flat_navigation_node($menuitemoptions, 0);
-
-    $flatnav->add($menuitem, $parentkey);
+    return $menuitems;
 }
 
 /**
