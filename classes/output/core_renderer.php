@@ -973,10 +973,6 @@ class core_renderer extends \core_renderer {
             return false;
         }
 
-        if ($this->page->course->id == 1) {
-            return false;
-        }
-
         $context = \context_course::instance($this->page->course->id);
 
         $evokegame = new \local_evokegame\output\evokegame();
