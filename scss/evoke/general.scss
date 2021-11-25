@@ -334,6 +334,10 @@ nav.navbar {
   top: 75px;
 }
 
+.notification-area .content-area .header .image-container {
+  display: flex;
+}
+
 @media (min-width: 1200px) {
   .pagelayout-incourse {
     #page {
