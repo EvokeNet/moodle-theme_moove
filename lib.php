@@ -500,7 +500,7 @@ function theme_moove_add_evokeportfolio_menuitems(\flat_navigation $flatnav) {
     $cansubmit = has_capability('mod/evokeportfolio:submit', $context);
 
     if ($cangrade) {
-        $actionurl = new moodle_url('/mod/evokeportfolio/gradingchapters.php', ['id' => $COURSE->id]);
+        $actionurl = new moodle_url('/mod/evokeportfolio/index.php', ['id' => $COURSE->id]);
 
         $menuitemoptions = [
             'action' => $actionurl,
