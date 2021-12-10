@@ -973,6 +973,11 @@ class core_renderer extends \core_renderer {
             return false;
         }
 
+
+        if (isguestuser() || !isloggedin()) {
+            return false;
+        }
+
         $context = \context_course::instance($this->page->course->id);
 
         $evokegame = new \local_evokegame\output\evokegame();
