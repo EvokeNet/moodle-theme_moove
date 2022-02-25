@@ -758,13 +758,13 @@ function theme_moove_serve_hvp_css($filename, $theme) {
 }
 
 function theme_moove_get_user_avatar_or_image($user = null) {
-    global $USER, $OUTPUT, $PAGE;
+    global $USER, $COURSE, $PAGE;
 
     if (!$user) {
         $user = $USER;
     }
 
-    if (class_exists(\local_evokegame\util\user::class)) {
+    if (class_exists(\local_evokegame\util\user::class) && $COURSE->id > 1 && \local_evokegame\util\game::is_enabled_in_course($COURSE->id)) {
         $userutil = new \local_evokegame\util\user();
 
         return $userutil->get_user_avatar_or_image($user);

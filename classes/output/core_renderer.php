@@ -461,19 +461,25 @@ class core_renderer extends \core_renderer {
             $navitemcount = count($opts->navitems);
             $idx = 0;
 
-            // Adds username to the first item of usermanu.
-            $userinfo = new stdClass();
-            $userinfo->itemtype = 'text';
-            $userinfo->title = fullname($user);
-            $userinfo->url = new moodle_url('/local/evokegame/profile.php', array('id' => $this->page->course->id));
-            $userinfo->pix = 'i/user';
+            $evokeprofileurl = new moodle_url('/local/evokegame/profile.php', ['id' => $this->page->course->id]);
+            $isgameenabled = false;
+            if (class_exists(\local_evokegame\util\user::class) && $this->page->course->id > 1 && \local_evokegame\util\game::is_enabled_in_course($this->page->course->id)) {
+                $isgameenabled = true;
 
-            array_unshift($opts->navitems, $userinfo);
+                // Adds username to the first item of usermanu.
+                $userinfo = new stdClass();
+                $userinfo->itemtype = 'text';
+                $userinfo->title = fullname($user);
+                $userinfo->url = $evokeprofileurl;
+                $userinfo->pix = 'i/user';
+
+                array_unshift($opts->navitems, $userinfo);
+            }
 
             foreach ($opts->navitems as $value) {
-                if ($value->pix == 'i/user' && ($value->title == fullname($user) || $value->titleidentifier = 'profile,moodle')) {
+                if ($isgameenabled &&  $this->page->course->id > 1 && $value->pix == 'i/user' && ($value->title == fullname($user) || $value->titleidentifier = 'profile,moodle')) {
                     $amls = new action_menu_link_secondary(
-                        new moodle_url('/local/evokegame/profile.php', array('id' => $this->page->course->id)),
+                        $evokeprofileurl,
                         new pix_icon($value->pix, $value->title, null, array('class' => 'iconsmall')),
                         $value->title,
                         array('class' => 'text-username')
