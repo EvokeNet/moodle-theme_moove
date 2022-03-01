@@ -179,6 +179,22 @@
                         <button type="submit" class="btn btn-secondary">{{#str}}startsignup{{/str}}</button>
                     </form>
                 {{/cansignup}}
+
+                {{#hasidentityproviders}}
+                    <h6 class="m-t-1">{{#str}} potentialidps, auth {{/str}}</h6>
+                    <div class="potentialidplist" class="m-t-1">
+                        {{#identityproviders}}
+                            <div class="potentialidp">
+                                <a href="{{{url}}}" title={{#quote}}{{name}}{{/quote}} class="btn btn-secondary">
+                                    {{#iconurl}}
+                                        <img src="{{iconurl}}" alt="" width="24" height="24"/>
+                                    {{/iconurl}}
+                                    {{name}}
+                                </a>
+                            </div>
+                        {{/identityproviders}}
+                    </div>
+                {{/hasidentityproviders}}
             </div>
         </div>
     </div>
@@ -187,8 +203,7 @@
 </div>
 
 
-{{#hasidentityproviders}}
-    {{#hasinstructions}}
+{{#hasinstructions}}
     <div class="row justify-content-center">
     <div class="col-xl-8 push-xl-2 m-2-md col-sm-8 push-sm-2">
     <div class="card instructionspanel">
@@ -208,8 +223,7 @@
     </div>
     </div>
     </div>
-    {{/hasinstructions}}
-{{/hasidentityproviders}}
+{{/hasinstructions}}
 
 {{#js}}
     {{#error}}
